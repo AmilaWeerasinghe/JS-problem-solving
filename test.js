@@ -27,4 +27,4 @@ var numJewelsInStones = function(jewels, stones) {
 const jewels = "aA";
 const stones = "aAAbbbb";
 const result = numJewelsInStones (jewels, stones);
-console.log("result", result);
+console.log("result", result); // based on the input expected result should be 3
