@@ -5,13 +5,18 @@ const DataFetch = () => {
     
     useEffect(() => {
         const fetchData = async () => {
-            let response = await fetch('https://randomuser.me/api');
-            let result = await response.json();
-            console.log(result.results)
-            setData(result.results);
+            try {
+                let response = await fetch('https://randomuser.me/api');
+                let result = await response.json();
+                console.log(result.results)
+                setData(result.results);
+            } catch (err) {
+                console.log(err);
+            }
+           
         }
-
-        fetchData();
+            fetchData();
+        
     },[])
 
     return (
