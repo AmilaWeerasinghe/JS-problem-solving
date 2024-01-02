@@ -7,12 +7,12 @@ const generateRandInt = (max) => {
   return Math.floor(Math.random() * max+1)
 }
 
-const CoreConcepts = (props)=> {
+const CoreConcepts = ({image,title,description})=> {
   return(
     <li>
-      <img src={props.image} alt=''/>
-      <h3>{props.title}</h3>
-      <p>{props.description}</p>
+      <img src={image} alt=''/>
+      <h3>{title}</h3>
+      <p>{description}</p>
     </li>
     
 
@@ -40,7 +40,7 @@ function App() {
         <h2>Core Concepts</h2>
         <ul>
           {CORE_CONCEPTS.map((item)=>{
-            return(<CoreConcepts image={item.image} title={item.title} description={item.description}/>)
+            return(<CoreConcepts {...item}/>)
           })}
         </ul>
         </section>
