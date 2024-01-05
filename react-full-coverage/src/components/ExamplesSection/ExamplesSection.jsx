@@ -2,6 +2,7 @@ import TabButtons from "../TabButtons/TabButtons";
 import { useState } from "react";
 import { EXAMPLES } from "../../data";
 import Section from "../Section/Section";
+import Tabs from "../Tabs/Tabs";
 
 const ExampplesSection = () => {
     const [tabContent, setTabContent] = useState('components');
@@ -11,14 +12,16 @@ const ExampplesSection = () => {
     setTabContent(selectedButton);
     setSelectedTopic(true)
   }
+
     return (
         <Section title='Examples' id='examples'>
-             <menu>
-            <TabButtons isSelected={tabContent === 'components'} onClick={() => handleSelect('components')}>Components</TabButtons>
+            <Tabs buttons={ <>
+                <TabButtons isSelected={tabContent === 'components'} onClick={() => handleSelect('components')}>Components</TabButtons>
             <TabButtons isSelected={tabContent === 'jsx'} onClick={() => handleSelect('jsx')}>JSX</TabButtons>
             <TabButtons isSelected={tabContent === 'props'} onClick={() => handleSelect('props')}>Props</TabButtons>
             <TabButtons isSelected={tabContent === 'state'} onClick={() => handleSelect('state')}>States</TabButtons>
-          </menu>
+            </>
+            }>
           
             {!selectedTopic && <p>Please select a topic.</p>}
             {selectedTopic && <div id='tab-content'>
@@ -30,6 +33,7 @@ const ExampplesSection = () => {
               </code>
             </pre>
             </div>}
+            </Tabs>
         </Section>
     )
 }
