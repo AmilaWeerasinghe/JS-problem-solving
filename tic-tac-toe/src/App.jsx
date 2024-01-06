@@ -5,11 +5,16 @@ import Log from './components/Log';
 import { WINNING_COMBINATIONS } from './winningCombinations';
 import GameOver from './components/GameOver';
 
-const initialBoard = [
+const INITIAL_BOARD = [
   [null, null, null],
   [null, null, null],
   [null, null, null]
-]
+];
+
+const PLAYERS = {
+  X: 'Player 1',
+  O: 'Player 2'
+};
 
 const getActivePlayer = (gameTurns) => {
   let currentPlayer = 'X';
@@ -20,25 +25,8 @@ const getActivePlayer = (gameTurns) => {
   return currentPlayer;
 }
 
-
-function App() {
-  const [gameTurns, setGameTurns] = useState([]);
-  const [playerName, setPlayerName] = useState({
-    X: 'Player 1',
-    O: 'Player 2'
-  })
-
-  const activePlayer = getActivePlayer(gameTurns);
-
-  let gameBoard = [...initialBoard.map((innerArray)=>[...innerArray])]; //ddep copy , so that have decopuled arrays from original and make it possible to rematch
-
-    for (const turn of gameTurns){
-        
-        const { square:{row,col} , player } = turn;
-        gameBoard[row][col] = player;
-    }
-
-    let winner;
+const getWinner = (gameBoard,playerName)=> {
+  let winner;
 
   for (const combination of WINNING_COMBINATIONS) {
     const firstSquareSymbol = gameBoard[combination[0].row][combination[0].column];
@@ -50,6 +38,30 @@ function App() {
       winner = playerName[firstSquareSymbol];
     }
   }
+  return winner;
+}
+
+const getGameBoard = (gameTurns)=> {
+  let gameBoard = [...INITIAL_BOARD.map((innerArray)=>[...innerArray])]; //depp copy , so that have decopuled arrays from original and make it possible to rematch
+
+    for (const turn of gameTurns){
+        
+        const { square:{row,col} , player } = turn;
+        gameBoard[row][col] = player;
+    }
+
+    return gameBoard;
+}
+
+
+function App() {
+  const [gameTurns, setGameTurns] = useState([]);
+  const [playerName, setPlayerName] = useState(PLAYERS)
+
+  const activePlayer = getActivePlayer(gameTurns);
+  const gameBoard = getGameBoard(gameTurns);
+
+    const winner = getWinner(gameBoard,playerName);
 
   //automatically calculated at the each time
   const hasDraw = gameTurns.length === 9 && !winner;
@@ -87,8 +99,8 @@ function App() {
     <main>
       <div id='game-container'>
         <ol id='players' className='highlight-player'>
-          <Player name='Player 1' symbol='X' onNameChange={handlePlayerName} isActive={activePlayer === 'X'}/>
-          <Player name='Player 2' symbol='O' onNameChange={handlePlayerName} isActive={activePlayer === 'O'}/>
+          <Player name={PLAYERS.X} symbol='X' onNameChange={handlePlayerName} isActive={activePlayer === 'X'}/>
+          <Player name={PLAYERS.O} symbol='O' onNameChange={handlePlayerName} isActive={activePlayer === 'O'}/>
         </ol>
         {(winner || hasDraw) && <GameOver winner={winner} onRestart={handleRematch}/>}
         <GameBoard onSelectSquare={handleSelectSquare} gameBoard={gameBoard} />
