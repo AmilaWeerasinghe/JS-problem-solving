@@ -6,33 +6,47 @@ const initialBoard = [
     [null, null, null]
 ]
 
-const GameBoard = ()=>{
-    const [boardState, setBoardState] = useState(initialBoard);
-    const [symbol,setSymbol] = useState('X');
+const GameBoard = ({onSelectSquare, turns})=>{
+    // const [boardState, setBoardState] = useState(initialBoard);
+    // const [symbol,setSymbol] = useState('X');
 
-    console.log(symbol)
+    let gameBoard = initialBoard;
 
-    const handleBoxClick = (row,col) =>{
-        setBoardState((prevboardState)=> {
-            const updatedBoard =[...prevboardState.map((innerArray)=> [...innerArray])];
-            updatedBoard[row][col] = symbol;
-            return updatedBoard;
+    for (const turn of turns){
+        
+        const { square:{row,col} , player } = turn;
+        
+        console.log(gameBoard, row, col,player);
 
-        });
-        setSymbol((prevSymbol)=> {
-            console.log(prevSymbol)
-            if(prevSymbol==='X'){
-                return 'O'
-            }
-            return 'X'
-        })
+        gameBoard[row][col] = player;
     }
+
+    // const handleBoxClick = (row,col) =>{
+    //     setBoardState((prevboardState)=> {
+    //         const updatedBoard =[...prevboardState.map((innerArray)=> [...innerArray])];
+    //         updatedBoard[row][col] = activeSymbol;
+    //         return updatedBoard;
+
+    //     });
+    //     // setSymbol((prevSymbol)=> {
+    //     //     console.log(prevSymbol)
+    //     //     if(prevSymbol==='X'){
+    //     //         return 'O'
+    //     //     }
+    //     //     return 'X'
+    //     // })
+
+    //     onSelectSquare();
+    // }
 
     return(
         <ol id='game-board'>
-            {boardState.map((row, rowIndex)=> <li index={rowIndex}>
+            {gameBoard.map((row, rowIndex)=> <li index={rowIndex}>
                 <ol>
-                    {row.map((playerSymbol,colIndex) => <li index={colIndex}><button onClick={()=>handleBoxClick(rowIndex,colIndex)}>{playerSymbol}</button></li>)}
+                    {row.map((playerSymbol,colIndex) => <li index={colIndex}>
+                        <button onClick={() => onSelectSquare(rowIndex,colIndex)} disabled={playerSymbol!== null}>
+                            {playerSymbol}
+                            </button></li>)}
                 </ol>
             </li>)}
         </ol>
