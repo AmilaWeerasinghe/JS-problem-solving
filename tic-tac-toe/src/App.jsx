@@ -3,6 +3,7 @@ import Player from "./components/Player";
 import GameBoard from "./components/GameBoard";
 import Log from './components/Log';
 import { WINNING_COMBINATIONS } from './winningCombinations';
+import GameOver from './components/GameOver';
 
 const initialBoard = [
   [null, null, null],
@@ -25,7 +26,7 @@ function App() {
 
   const activePlayer = getActivePlayer(gameTurns);
 
-  let gameBoard = initialBoard;
+  let gameBoard = [...initialBoard.map((innerArray)=>[...innerArray])]; //ddep copy , so that have decopuled arrays from original and make it possible to rematch
 
     for (const turn of gameTurns){
         
@@ -46,12 +47,13 @@ function App() {
     }
   }
 
+  //automatically calculated at the each time
+  const hasDraw = gameTurns.length === 9 && !winner;
 
   const handleSelectSquare = (rowIndex,colIndex) => {
     setGameTurns((prevTurns)=> {
       let currentPlayer = getActivePlayer(prevTurns);
 
-    console.log('current active player',currentPlayer)
       const updatedTurns = [{
         square: {
           row: rowIndex,
@@ -64,7 +66,10 @@ function App() {
     })
   }
 
-  console.log('current active player',activePlayer)
+  const handleRematch = ()=> {
+    setGameTurns([]);
+  }
+
   return (
     <main>
       <div id='game-container'>
@@ -72,8 +77,8 @@ function App() {
           <Player name='Player 1' symbol='X' isActive={activePlayer === 'X'}/>
           <Player name='Player 2' symbol='O'isActive={activePlayer === 'O'}/>
         </ol>
-        {winner && <p>You Won, {winner}!</p>}
-        <GameBoard onSelectSquare={handleSelectSquare} gameBoard={gameBoard}/>
+        {(winner || hasDraw) && <GameOver winner={winner} onRestart={handleRematch}/>}
+        <GameBoard onSelectSquare={handleSelectSquare} gameBoard={gameBoard} />
       </div>
       <Log turns={gameTurns}/>
     </main>
