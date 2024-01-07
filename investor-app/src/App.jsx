@@ -9,7 +9,11 @@ function App() {
     annualInvestment:1200,
     expectedReturn: 1000,
     duration:5
-})
+});
+
+const isValidInput = (userInput) => {
+  return (userInput.duration > 1)
+}
 
 const handleChange = (inputIdentifier, newValue)=>{
   setUserInput((prevUserInput) => {
@@ -24,7 +28,7 @@ const handleChange = (inputIdentifier, newValue)=>{
     <>
     <Header/>
     <UserInput userInput={userInput} onChange={handleChange}/>
-    <Results userInput={userInput}/>
+    {isValidInput(userInput) ? <Results userInput={userInput}/> : <p className="center">Please enter a duration greater than zero</p>}
     </>
     
   )
