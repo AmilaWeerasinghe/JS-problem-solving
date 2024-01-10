@@ -8,26 +8,47 @@ import Startup from "./components/Startup";
 function App() {
   const [showAddProject, setShowAddProject] = useState(false);
   const [showProctDetails , setShowProjectDetails] = useState(false);
+  const [projectState, setProjectState] = useState({
+    selectedProjectId: undefined,
+    projects: []
+  })
 
   const onAddProjectClick = () =>{
-    setShowAddProject(true);
+    setProjectState((prevProjectState) => {
+      return({
+        ...prevProjectState,
+        selectedProjectId : null,
+      }
+      )
+    })
   }
 
-  const onProjecSelect = () => {
-    setShowAddProject(false);
-
+  const handleAddSave = (title,description,dueDate) => {
+    setProjectState((prevState) => {
+      const newProject = {
+        title,
+        description,
+        dueDate,
+        id: Math.random()
+      }
+      return {
+        ...prevState,
+        projects: [...prevState.projects, newProject]
+      }
+    })
   }
+
+  console.log(projectState)
   return (
-    <>
-      <h1 className="my-8 text-center text-5xl font-bold">Hello World</h1>
-      <Startup onCreateProject={onAddProjectClick}/>
+    <main className="h-screen my-8 flex gap-8">
       <SideBar onAddProject={onAddProjectClick}/>
-      {showAddProject && <AddProject/>}
+      {projectState && projectState.selectedProjectId === undefined && <Startup onCreateProject={onAddProjectClick}/>}
+      {projectState && projectState.selectedProjectId === null && <AddProject onSave ={handleAddSave}/>}
       <section>
         <ProjectHeader/>
         <TaskList/>
       </section>
-    </>
+    </main>
   );
 }
 

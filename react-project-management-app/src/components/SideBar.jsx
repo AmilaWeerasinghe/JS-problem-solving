@@ -1,9 +1,10 @@
+import Button from "./Button";  
 const SideBar = ({onAddProject}) => {
     return(
-        <section>
-            <h2>SideBar</h2>
-            <button onClick={onAddProject}>Add Project</button>
-        </section>
+        <aside className="w-1/3 px-8 py-16 bg-stone-900 text-stone-50 md:w-72 rounded-r-xl">
+            <h2 className="mb-8 font-bold uppercase md:text-xl text-stone-200">Your Projects</h2>
+            <Button onClick={onAddProject}>+ Add Project</Button>
+        </aside>
     )
 }
 
