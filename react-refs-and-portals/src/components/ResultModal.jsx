@@ -1,4 +1,6 @@
 import { forwardRef } from "react";
+import { createPortal} from 'react-dom'
+
 const ResultModal = forwardRef(({targetTime, remainingTime, onReset},ref) => {
 
     const userLost = remainingTime <= 0;
@@ -8,19 +10,21 @@ const ResultModal = forwardRef(({targetTime, remainingTime, onReset},ref) => {
     const score = Math.round((remainingTime/ (targetTime *1000)) *100);
 
     return(
-        <dialog ref={ref} className="result-modal">
+        createPortal(<dialog ref={ref} className="result-modal">
             {userLost && <h2>You lost</h2>}
             {!userLost && <h2>You scored {score}</h2>}
             <p>
                 The target time was <strong>{targetTime}</strong> seconds.
             </p>
             <p>
-                You stopped the timer with <strong>{formattedRemainingTime}</strong> seconds left
+                You stopped the timer with <strong>{formattedRemainingTime< 0 ? 0 : formattedRemainingTime}</strong> seconds left
             </p>
             <form method="dialog" onSubmit={onReset}>
                 <button>Close</button>
             </form>
-        </dialog>
+        </dialog>, 
+        document.getElementById('modal')
+        )
     )
 })
 
