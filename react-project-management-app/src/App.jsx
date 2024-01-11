@@ -1,14 +1,10 @@
 import { useState } from "react";
 import SideBar from "./components/SideBar";
-import AddProject from "./components/AddProject";
-import ProjectHeader from "./components/project-view/ProjectHeader";
-import TaskList from "./components/project-view/TaskList";
+import AddProject from "./components/project-view/AddProject";
 import Startup from "./components/Startup";
-import SelectedProject from "./components/SelectedProject";
+import SelectedProject from "./components/project-view/SelectedProject";
 
 function App() {
-  const [showAddProject, setShowAddProject] = useState(false);
-  const [showProctDetails , setShowProjectDetails] = useState(false);
   const [projectState, setProjectState] = useState({
     selectedProjectId: undefined,
     projects: [],
