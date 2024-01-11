@@ -11,7 +11,8 @@ function App() {
   const [showProctDetails , setShowProjectDetails] = useState(false);
   const [projectState, setProjectState] = useState({
     selectedProjectId: undefined,
-    projects: []
+    projects: [],
+    tasks:[]
   })
 
   const onAddProjectClick = () =>{
@@ -68,16 +69,32 @@ function App() {
     })
   }
 
+  const handleAddTask = (text) => {
+    setProjectState((prevState) => {
+      const taskId = Math.random();
+      const newTask = {
+        id: taskId,
+        text,
+        projectId: prevState.selectedProjectId
+      }
+      return({
+        ...prevState,
+        tasks: [newTask,...prevState.tasks]
+      })
+    })
+
+  }
+
+  const handleDeleteTask = () => {
+
+  }
+
   return (
     <main className="h-screen my-8 flex gap-8">
       <SideBar onAddProject={onAddProjectClick} projects={projectState.projects} onSelectProject={handleSelectProject} selectedProjectId={projectState.selectedProjectId}/>
       {projectState && projectState.selectedProjectId === undefined && <Startup onCreateProject={onAddProjectClick}/>}
       {projectState && projectState.selectedProjectId === null && <AddProject onSave ={handleAddSave} onCancel={handleCancel}/>}
-      {projectState && (projectState.selectedProjectId !== null && projectState.selectedProjectId !== undefined) && <SelectedProject project={projectState.projects.find((project) => project.id === projectState.selectedProjectId)} onDelete={handleDeleteProject}/>}
-      <section>
-        <ProjectHeader/>
-        <TaskList/>
-      </section>
+      {projectState && (projectState.selectedProjectId !== null && projectState.selectedProjectId !== undefined) && <SelectedProject project={projectState.projects.find((project) => project.id === projectState.selectedProjectId)} onDelete={handleDeleteProject} onTaskAdd={handleAddTask} onTaskDelete={handleDeleteTask} tasks={projectState.tasks}/>}
     </main>
   );
 }

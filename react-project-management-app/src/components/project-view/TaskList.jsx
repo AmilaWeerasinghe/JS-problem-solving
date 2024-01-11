@@ -5,6 +5,8 @@ const TaskList = ({tasklist})=>{
     return(
         <section>
             <h2>Task List</h2>
+            New Tasks
+            <p>This does not have tasks yet</p>
             <input/><button>Add task</button>
             <ul>
             {tasks.map((task,index) => {
