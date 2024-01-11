@@ -1,25 +1,42 @@
 import {useRef} from 'react';
 import Input from "./Input";
+import Modal from './Modal';
 
-const AddProject = ({onSave})=>{
+const AddProject = ({onSave, onCancel})=>{
     const title = useRef();
     const description = useRef();
     const dueDate= useRef();
+    const ModalRef = useRef();
 
     const handleSave = () => {
        const enteredTitle = title.current.value;
        const enteredDescription = description.current.value;
        const enteredDueDate = dueDate.current.value;
 
+       if (enteredTitle.trim()=== '' || enteredDescription.trim()==='' || enteredDueDate.trim()===''){
+        ModalRef.current.open();
+        return;
+       }
+
        //validations
        onSave(enteredTitle,enteredDescription,enteredDueDate);
     }
 
+    const handleCancel = () => {
+        onCancel();
+    }
+
     return(
+        <>
+        <Modal ref={ModalRef} buttonCaption='Close'>
+            <h2 className='text-xl font-bold text-stone-700 my-4'>Invalid Input</h2>
+            <p className='text-stone-600 mb-4'>oops...looks like you forgot to input value</p>
+            <p className='text-stone-600 mb-4'>Please make sure to input values for all input fields</p> 
+        </Modal>
         <div className="w-[35rem] mt-16">
             <menu className="flex items-center justify-end gap-4 my-4">
                 <li>
-                    <button className="text-stone-800 hover:text-stone-950">
+                    <button onClick={handleCancel} className="text-stone-800 hover:text-stone-950">
                     Cancel
                     </button>
                 </li>
@@ -36,7 +53,7 @@ const AddProject = ({onSave})=>{
                 <Input type='date' ref={dueDate} label='Due Date' />
         </div>
         </div>
-       
+       </>
     )
 }
 
