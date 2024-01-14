@@ -21,7 +21,10 @@ export const fetchData = ()=> {
 
           try{
            const cartData = await fetchRequest();
-           dispatch(cartActions.replaceCart(cartData));
+           dispatch(cartActions.replaceCart({
+            items:cartData.items|| [],
+            totalQuantity: cartData.totalQuantity || 0
+           }));
            dispatch(uiActions.showNotification({
             status:'success',
             title: 'success',
