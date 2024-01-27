@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const events = [
     {id : 1 , name: 'event1'},
     {id : 2 , name: 'event2'},
@@ -13,7 +15,7 @@ const EventsPage = () => {
             {
                 events.map((event) => 
                 <li key={event.id}>
-                    {event.name}
+                    <Link to={`/events/${event.id}`}>{event.name}</Link>
                 </li>
                 )
             }
