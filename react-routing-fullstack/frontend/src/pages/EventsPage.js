@@ -20,7 +20,7 @@ function EventsPage() {
 export default EventsPage;
 
 export const loader  = async () => {
-    const response = await fetch('http://localhost:8080/events123');
+    const response = await fetch('http://localhost:8080/events');
 
       if (!response.ok) {
         // throw new Response(JSON.stringify({
