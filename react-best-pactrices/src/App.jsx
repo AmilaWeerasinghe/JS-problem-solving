@@ -6,7 +6,7 @@ function App() {
     <section>
       <h2>Why work with us?</h2>
       <Accordian className="accordion">
-        <AccordianItem className="accordion-item" title="we got 20 years of experience">
+        <AccordianItem id="experience" className="accordion-item" title="we got 20 years of experience">
           <article>
             <p>You can&apos;t go wrong with us</p>
             <p>
@@ -15,7 +15,7 @@ function App() {
             </p>
           </article>
         </AccordianItem>
-        <AccordianItem className="accordion-item" title="We are working with local guides">
+        <AccordianItem id="local" className="accordion-item" title="We are working with local guides">
           <article>
             <p>We are not doing along from our office</p>
             <p>
