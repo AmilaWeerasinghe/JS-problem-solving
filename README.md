@@ -3,9 +3,9 @@ Javascript Core based on fundamentals.
 From fundamentals to advanced concepts.
 Includes projects.
 Written and updated with latest best pactrices.
-Follows best patters where applicable.
+Follows best patterns where applicable.
 
-Tools and Areas
+Tools and Areas covered ( list to be continued)
 
 1.Vanilla JS
 2.Data structures using JS
